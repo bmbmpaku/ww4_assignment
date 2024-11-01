@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffee in Hotels</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="logo_block">
+        <img src="" alt="" class="logo" />
+        <h1>Hotel Swill</h1>
+      </div>
+      <button id="menuButton" class="menu-button">☰</button>
+    </header>
+    <main class="vws">
+      <div class="container1">
+        <h2>Welcome to the your trustworthy hotel coffee reviews</h2>
+        <p>
+          Its worth knowing your waking hours will be enhanced by grand cup of
+          coffee
+        </p>
+      </div>
+      <div class="container2">
+        <form id="reviewform">
+          <input name="reviewer" type="text" placeholder="Username" />
+          <input name="hotel" type="text" placeholder="Hotel" />
+          <label>
+            <span>Star Rating</span>
+            <input name="Star" type="range" min="0" max="5" value="1" />
+          </label>
+          <button>Submit</button>
+        </form>
+      </div>
+      <div class="container3">
+        <h2>Reviews</h2>
+        <div class="filters">
+          <input id="filter-hotel" type="text" placeholder="Filter by hotel" />
+          <input id="filter-city" type="text" placeholder="Filter by city" />
+          <select id="filter-star">
+            <option value="">Filter by star rating</option>
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+          </select>
+          <button id="applyFilters">Apply Filters</button>
+        </div>
+        <div id="reviewbox">Loading reviews...</div>
+      </div>
+    </main>
+
+    <aside class="settings">
+      <h2 id="menu">Settings</h2>
+      <label>
+        <span>Music</span>
+        <input type="checkbox" checked />
+      </label>
+      <label>
+        <span>Text Size</span>
+        <input type="range" min="14" max="24" value="18" />
+      </label>
+      <label>
+        <span>Text Style</span>
+        <input type="checkbox" checked /> Jetbrains Mono
+      </label>
+    </aside>
+  </body>
+</html>
