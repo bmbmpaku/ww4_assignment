@@ -5,6 +5,8 @@ document.getElementById("menuButton").addEventListener("click", () => {
   settings.classList.toggle("hide");
 });
 
+const baseUrl = "https://ww4-assignment.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   const reviewForm = document.getElementById("reviewform");
   const reviewBox = document.getElementById("reviewbox");
