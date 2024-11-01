@@ -11,7 +11,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "vite",
-    "build": "npm && vite build",
+    "build": "npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
