@@ -36,36 +36,46 @@ app.post("/reviews", async function (request, response) {
     response.status(500).json({ error: "Failed to add review" });
   }
 });
+
 /*All reviews*/
 app.get("/reviews", async (req, res) => {
-  const { hotel, city, star } = req.query;
   try {
-    let query = `SELECT * FROM reviews WHERE 1=1`;
-    const values = [];
-
-    if (hotel) {
-      query += ` AND hotel ILIKE $${values.length + 1}`;
-      values.push(`%${hotel}%`);
-    }
-    if (city) {
-      query += ` AND city ILIKE $${values.length + 1}`;
-      values.push(`%${city}%`);
-    }
-    if (star) {
-      query += ` AND star = $${values.length + 1}`;
-      values.push(star);
-    }
-
-    const { rows } = await db.query(query, values);
-    res.json(rows);
+    // Query to get all reviews from the 'reviews' table
+    const result = await db.query("SELECT * FROM reviews");
+    // Send the array of reviews as a JSON response
+    res.json(result.rows);
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve reviews" });
+    console.error("Error fetching reviews:", error);
+    res.status(500).send("Error fetching reviews");
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+// post review
+app.post("/reviews", async function (request, response) {
+  const { reviewer, hotel, city, content, star } = request.body;
+  console.log("New review submission:", {
+    reviewer,
+    hotel,
+    city,
+    content,
+    star,
+  });
+
+  try {
+    const result = await db.query(
+      `INSERT INTO reviews (reviewer, hotel, city, content, star) 
+       VALUES ('${reviewer}', '${hotel}', '${city}', '${content}', ${star})`
+    );
+    response.json(result);
+  } catch (error) {
+    console.error("Failed to add review:", error);
+    response.status(500).json({ error: "Failed to add review" });
+  }
 });
 
 //test, runs fine
