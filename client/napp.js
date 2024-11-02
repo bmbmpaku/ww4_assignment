@@ -1,3 +1,5 @@
+const baseUrl = "https://ww4-assignment.onrender.com";
+
 document.getElementById("menuButton").addEventListener("click", () => {
   const settings = document.querySelector(".settings");
   settings.classList.toggle("show");
@@ -12,10 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterStar = document.getElementById("filter-star");
   const applyFiltersButton = document.getElementById("applyFilters");
 
-  /* Fetch and display reviews */
+  // Fetch and display reviews
   async function fetchReviews(filters = {}) {
     try {
-      let url = "/reviews";
+      let url = `${baseUrl}/reviews`;
       const queryParams = new URLSearchParams(filters).toString();
       if (queryParams) url += `?${queryParams}`;
       const response = await fetch(url);
@@ -36,23 +38,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  fetchReviews(); // Load all reviews when the page loads
+  // Load all reviews on page load
+  fetchReviews();
 
-  /* Submit new review */
+  // Submit new review
   reviewForm.addEventListener("submit", async (event) => {
-    event.preventDefault(); // Prevent the page from reloading
+    event.preventDefault();
 
     const formData = new FormData(reviewForm);
     const data = Object.fromEntries(formData.entries());
 
     try {
-      await fetch("/reviews", {
+      await fetch(`${baseUrl}/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      reviewForm.reset(); // Clear the form
-      fetchReviews(); // Reload reviews after submission
+      reviewForm.reset();
+      fetchReviews(); // Reload reviews to include the new one
     } catch (error) {
       console.error("Failed to submit review", error);
     }

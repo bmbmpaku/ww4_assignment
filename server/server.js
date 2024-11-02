@@ -1,88 +1,50 @@
-//assets all installed and imported
-//server currently running on port 8080 all working
-
 import express from "express";
 import cors from "cors";
 import pg from "pg";
 import dotenv from "dotenv";
 
+dotenv.config();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
-dotenv.config();
 
-// db pool url set up
+// Database pool setup
 const db = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-// post review
-app.post("/reviews", async function (request, response) {
-  const { reviewer, hotel, city, content, star } = request.body;
-  console.log("New review submission:", {
-    reviewer,
-    hotel,
-    city,
-    content,
-    star,
-  });
+// POST /reviews: Add a new review
+app.post("/reviews", async (req, res) => {
+  const { reviewer, hotel, city, content, star } = req.body;
 
   try {
     const result = await db.query(
-      `INSERT INTO reviews (reviewer, hotel, city, content, star) 
-       VALUES ('${reviewer}', '${hotel}', '${city}', '${content}', ${star})`
+      "INSERT INTO reviews (reviewer, hotel, city, content, star) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [reviewer, hotel, city, content, star]
     );
-    response.json(result);
+    res.json(result.rows[0]);
   } catch (error) {
     console.error("Failed to add review:", error);
-    response.status(500).json({ error: "Failed to add review" });
+    res.status(500).json({ error: "Failed to add review" });
   }
 });
 
-/*All reviews*/
+// GET /reviews: Fetch all reviews
 app.get("/reviews", async (req, res) => {
   try {
-    // Query to get all reviews from the 'reviews' table
-    const result = await db.query("SELECT * FROM reviews");
-    // Send the array of reviews as a JSON response
+    const result = await db.query("SELECT * FROM reviews ORDER BY id DESC");
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching reviews:", error);
-    res.status(500).send("Error fetching reviews");
+    res.status(500).json({ error: "Error fetching reviews" });
   }
+});
+
+// Root endpoint test
+app.get("/", (req, res) => {
+  res.json("This is the root endpoint test");
 });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-// post review
-app.post("/reviews", async function (request, response) {
-  const { reviewer, hotel, city, content, star } = request.body;
-  console.log("New review submission:", {
-    reviewer,
-    hotel,
-    city,
-    content,
-    star,
-  });
-
-  try {
-    const result = await db.query(
-      `INSERT INTO reviews (reviewer, hotel, city, content, star) 
-       VALUES ('${reviewer}', '${hotel}', '${city}', '${content}', ${star})`
-    );
-    response.json(result);
-  } catch (error) {
-    console.error("Failed to add review:", error);
-    response.status(500).json({ error: "Failed to add review" });
-  }
-});
-
-//test, runs fine
-app.get("/", function (request, response) {
-  response.json("this is the root test");
-});
-
-app.listen(8080, function () {
-  console.log("app is running on port 8080");
+  console.log(`Server is running on port ${PORT}`);
 });
