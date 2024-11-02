@@ -12,7 +12,7 @@ async function seedDatabase() {
         ('Glen', 'Paris', 'Ibis', 'The coffee tasted delightful, the fluffy marshmallow-esque whip is to die for'),
         ('Cohen', 'Lisboa', 'Sheraton', 'The coffee tasted delightful, the fluffy marshmallow-esque whip is to die for'),
         ('Bowen', 'London', 'Hilton', 'The coffee tasted delightful, the fluffy marshmallow-esque whip is to die for');
-      `);
+    `);
     console.log("Database seeded successfully");
   } catch (error) {
     console.error("Error seeding database:", error);
