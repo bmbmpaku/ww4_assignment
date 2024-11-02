@@ -1,17 +1,8 @@
-/* Menu Side bar */
 document.getElementById("menuButton").addEventListener("click", () => {
   const settings = document.querySelector(".settings");
   settings.classList.toggle("show");
   settings.classList.toggle("hide");
 });
-const reviewForm = document.getElementById("reviewform");
-const reviewBox = document.getElementById("reviewbox");
-const filterHotel = document.getElementById("filter-hotel");
-const filterCity = document.getElementById("filter-city");
-const filterStar = document.getElementById("filter-star");
-const applyFiltersButton = document.getElementById("applyFilters");
-
-const baseUrl = "https://ww4-assignment.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   const reviewForm = document.getElementById("reviewform");
@@ -22,26 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const applyFiltersButton = document.getElementById("applyFilters");
 
   /* Fetch and display reviews */
-
-  app.get("/stars", async function (request, response) {
-    /* testing stars*/
-    const result = await db.query("SELECT * FROM reviews");
-    const reviews = result.rows;
-    // send the books to the client //
-    response.json(books);
-    console.log(response.json(books));
-  });
-  async function fetchReviews() {
+  async function fetchReviews(filters = {}) {
     try {
-      // Fetch reviews from the server//
-      const response = await fetch("/reviews");
-      // Parse the response JSON
+      let url = "/reviews";
+      const queryParams = new URLSearchParams(filters).toString();
+      if (queryParams) url += `?${queryParams}`;
+      const response = await fetch(url);
       const reviews = await response.json();
 
-      // Get the reviewBox element//
-      const reviewBox = document.getElementById("reviewbox");
-
-      // Update reviewBox with the fetched reviews//
       reviewBox.innerHTML = reviews
         .map(
           (review) => `
@@ -53,19 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
         )
         .join("");
     } catch (error) {
-      console.error("Failed to load reviews:", error);
       reviewBox.innerHTML = "Failed to load reviews.";
     }
   }
 
-  // Fetch reviews when the page content is loaded
-  document.addEventListener("DOMContentLoaded", fetchReviews);
+  fetchReviews(); // Load all reviews when the page loads
 
-  fetchReviews();
-
-  /*Submit new review*/
+  /* Submit new review */
   reviewForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the page from reloading
+
     const formData = new FormData(reviewForm);
     const data = Object.fromEntries(formData.entries());
 
@@ -75,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      reviewForm.reset();
+      reviewForm.reset(); // Clear the form
       fetchReviews(); // Reload reviews after submission
     } catch (error) {
       console.error("Failed to submit review", error);
