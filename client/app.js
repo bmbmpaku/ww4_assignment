@@ -4,6 +4,12 @@ document.getElementById("menuButton").addEventListener("click", () => {
   settings.classList.toggle("show");
   settings.classList.toggle("hide");
 });
+const reviewForm = document.getElementById("reviewform");
+const reviewBox = document.getElementById("reviewbox");
+const filterHotel = document.getElementById("filter-hotel");
+const filterCity = document.getElementById("filter-city");
+const filterStar = document.getElementById("filter-star");
+const applyFiltersButton = document.getElementById("applyFilters");
 
 const baseUrl = "https://ww4-assignment.onrender.com";
 
