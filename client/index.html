@@ -62,28 +62,14 @@
       <p>Copyright 2024</p>
       <img src="./Assets/swirl.png" alt="coffee cup" />
     </footer>
-    <audio controls>
-      <source
-        src="./Assets/Read_All_About_It.mp3"
-        type="audio/mpeg"
-        loop="True"
-        autoplay="True"
-      />
+    <audio id="backgroundMusic" loop>
+      <source src="./Assets/Read_All_About_It.mp3" type="audio/mpeg" />
     </audio>
-
     <aside class="settings">
       <h2 id="menu">Settings</h2>
       <label>
-        <span>Music</span>
-        <input type="checkbox" checked />
-      </label>
-      <label>
         <span>Text Size</span>
-        <input type="range" min="14" max="24" value="18" />
-      </label>
-      <label>
-        <span>Text Style</span>
-        <input type="checkbox" checked /> Jetbrains Mono
+        <input id="textSizeSlider" type="range" min="14" max="24" value="18" />
       </label>
     </aside>
   </body>

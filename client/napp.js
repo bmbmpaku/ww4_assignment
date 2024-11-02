@@ -1,10 +1,24 @@
 const baseUrl = "https://ww4-assignment.onrender.com";
 
+/* Menu Slider*/
 document.getElementById("menuButton").addEventListener("click", () => {
   const settings = document.querySelector(".settings");
   settings.classList.toggle("show");
   settings.classList.toggle("hide");
 });
+
+// Text Size Adjustment
+const textSizeSlider = document.getElementById("textSizeSlider");
+// Set initial text size
+document.body.style.fontSize = `${textSizeSlider.value}px`;
+
+textSizeSlider.addEventListener("input", (event) => {
+  const newSize = `${event.target.value}px`;
+  document.body.style.fontSize = newSize;
+  console.log("Text size adjusted to:", newSize);
+});
+
+//Event Listeners
 
 document.addEventListener("DOMContentLoaded", () => {
   const reviewForm = document.getElementById("reviewform");

@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Coffee in Hotels</title>
-    <script type="module" crossorigin src="/assets/index-C_SaXVS5.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Dtx67NG0.css">
+    <script type="module" crossorigin src="/assets/index-C6oUhH5t.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BLEojs7H.css">
   </head>
   <body>
     <header>
@@ -62,28 +62,14 @@
       <p>Copyright 2024</p>
       <img src="/assets/swirl-BsyL_Vib.png" alt="coffee cup" />
     </footer>
-    <audio controls>
-      <source
-        src="/assets/Read_All_About_It-kdQxNxdF.mp3"
-        type="audio/mpeg"
-        loop="True"
-        autoplay="True"
-      />
+    <audio id="backgroundMusic" loop>
+      <source src="/assets/Read_All_About_It-kdQxNxdF.mp3" type="audio/mpeg" />
     </audio>
-
     <aside class="settings">
       <h2 id="menu">Settings</h2>
       <label>
-        <span>Music</span>
-        <input type="checkbox" checked />
-      </label>
-      <label>
         <span>Text Size</span>
-        <input type="range" min="14" max="24" value="18" />
-      </label>
-      <label>
-        <span>Text Style</span>
-        <input type="checkbox" checked /> Jetbrains Mono
+        <input id="textSizeSlider" type="range" min="14" max="24" value="18" />
       </label>
     </aside>
   </body>
